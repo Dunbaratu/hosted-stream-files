@@ -37,29 +37,20 @@ cat > ${MODFILESTAGING} <<ENDMARK
 ENDMARK
 
 # THIS IS A FRAGILE SCRIPT BASED ON LOOKING AT THE TEXT
-# OUTPUT OF THE CKAN COMMAND.  IF CKAN CHANGES THEIR
-# OUTPUT FORMAT, THIS SCRIPT WILL BREAK.
+# OUTPUT OF THE CKAN list -- porcelain COMMAND.  IF CKAN
+# CHANGES THEIR OUTPUT FORMAT, THIS SCRIPT WILL BREAK.
 
-# Expected format:
-#
-#   stuff, script bypasses and ignores
-#   A line containing the phrase "Installed Modules"
-#   stuff, script bypasses and ignores until it hits...
-#   an empty line
 #   A List of Mods one per line:
 #      Some of these lines have preceding "- ","+ ", or "A " strings
 #      on the lefthand side, which have to do with how the mod got installed,
 #      so the script strips and ignores those prefix strings if they exist.
-#   <eof>
 
 "$CKAN" ksp default "${WHICHKSP}"
 
-"$CKAN" list |\
-    sed '0,/^Installed Modules/d' |\
-    sed '0,/^ *$/d' |\
-    sed '/^ *$/,$d' |\
-    sed 's/^[+-A] \([^ ]*\).*$/      <li>\1<\/li>/g' |\
-    sed '1,1s/^, //g' >> ${MODFILESTAGING}
+"$CKAN" list --porcelain \
+  | sed 's/^[+-A^] \([^ ]*\).*$/      <li>\1<\/li>/g' \
+  | sed '/ICSharpCode/d' \
+  >> ${MODFILESTAGING}
 
 cat >> "${MODFILESTAGING}" << ENDMARK
     </ul>
