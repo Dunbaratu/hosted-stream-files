@@ -7,7 +7,7 @@
 #
 
 CKAN="/d/SteamLibrary_2/steamapps/common/Kerbal Space Program/GameData/ckan.exe"
-WHICHKSP="Steam with auto-updates" # the CKAN name for the install to use
+WHICHKSP="Kerbal Space Program v1.10.1" # the CKAN name for the install to use
 STARTDIR="${PWD}"
 STAGINGDIR="${STARTDIR}/html-staging/"
 GHPAGESDIR="${STARTDIR}/html/"
