@@ -7,7 +7,11 @@
 #
 
 CKAN="/d/SteamLibrary_2/steamapps/common/Kerbal Space Program/GameData/ckan.exe"
-WHICHKSP="Kerbal Space Program v1.10.1" # the CKAN name for the install to use
+#WHICHKSP="Kerbal Space Program v1.10.1" # the CKAN name for the install to use
+#WHICHKSP="Kerbal Space Program v1.10.1 RP-1"
+#WHICHKSP="auto"
+#WHICHKSP="Kerbal Space Program v1.10.1 Beyond Home"
+WHICHKSP="Kerbal Space Program v1.12.2 - stream"
 STARTDIR="${PWD}"
 STAGINGDIR="${STARTDIR}/html-staging/"
 GHPAGESDIR="${STARTDIR}/html/"
@@ -69,7 +73,12 @@ ENDMARK
 #      on the lefthand side, which have to do with how the mod got installed,
 #      so the script strips and ignores those prefix strings if they exist.
 
-"$CKAN" ksp default "${WHICHKSP}"
+if [ "${WHICHKSP}" = "auto" ]
+then
+  "Using Default CKAN instance."
+else
+  "$CKAN" instance default "${WHICHKSP}"
+fi
 
 "$CKAN" list --porcelain \
   | sed 's/^[+-A^] \([^ ]*\).*$/      <li>\1<\/li>/g' \
