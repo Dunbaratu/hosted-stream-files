@@ -1,0 +1,47 @@
+<html>
+<meta http-equiv='cache-control' content='no-cache'> 
+<meta http-equiv='expires' content='0'> 
+<meta http-equiv='pragma' content='no-cache'>
+<head>
+</head>
+<body>
+  <h3>Softlock bug in Thief 1: Return to the Haunted Cathedral</h3>
+
+  <p>
+    After doing a bunch of fetch quests to help some ghost, you are given
+    access to a bomb and a fire arrow and a note.  The note says you can
+    force gates open using the bomb if you set the bomb off with fire.
+  </p>
+  <p>
+    The bug:
+    
+    If you set off the bomb doing what the note says, using the fire effect
+    from the fire arrow, which is <i>an area-of-effect around the impact of
+    the arrow</i>, the gate will not open, even though the bomb still exploded.
+    Now you are softlocked and cannot end the level because the bomb is
+    gone and didn't work like the note said it would.
+
+    Avoiding the bug:
+
+    Hit the bomb directly with the tip of the fire arrow, don't just catch
+    the bomb in the arrow's fire effect.  The note implies it's the fire of
+  </p>
+  <p>
+    The reason I call it a bug:
+
+    The note implies it's the fire igniting the bomb that opens the gate and
+    that's a blatant lie.  The fire is NOT what causes it.  The trigger the game
+    actually uses is that it checks when there's a collisions between a fire arrow
+    and another object.  If the fire arrow collides with the bomb, that opens
+    the gate if the gate is next to the bomb.  The fact that fire arrow
+    collisions also cause fire around the area of impact has nothing to do with
+    the actual check.  The game claimed it was the fire that causes it, and it's
+    not.
+
+    The check *belonged* not in the "arrow collide with thing" event, but in the
+    "bomb blows up" event.  Because that's when the one-time object gets consumed,
+    so that's when the check should happen.  Then it would work both on direct hits 
+    of the fire arrow and area-of-effect hits of the fire arrow.
+  </p>
+</body>
+</html>
