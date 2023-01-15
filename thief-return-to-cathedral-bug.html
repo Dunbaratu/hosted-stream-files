@@ -28,12 +28,14 @@
 
     Hit the bomb directly with the tip of the fire arrow, don't just catch
     the bomb in the arrow's fire effect.  The note implies it's the fire of
+    the bomb that opens the gate and that's a blatant lie.  It's the collision
+    between fire arrow and bomb that opens the gate, NOT the fire effect
+    that occurs when fire arrows collide with things.
   </p>
   <p>
   <b>The reason I call it a bug:</b>
 
-    The note implies it's the fire igniting the bomb that opens the gate and
-    that's a blatant lie.  The fire is NOT what causes it.  The trigger the game
+    The trigger the game
     actually uses is that it checks when there's a collisions between a fire arrow
     and another object.  If the fire arrow collides with the bomb, that opens
     the gate if the gate is next to the bomb.  The fact that fire arrow
@@ -41,10 +43,11 @@
     the actual check.  The game claimed it was the fire that causes it, and it's
     not.
 
-    The check *belonged* not in the "arrow collide with thing" event, but in the
-    "bomb blows up" event.  Because that's when the one-time object gets consumed,
+    The check *belonged* in the "bomb blows up" even, not the "arrow collide with
+    thing" event.  Because that's when the one-time object gets consumed,
     so that's when the check should happen.  Then it would work both on direct hits 
-    of the fire arrow and area-of-effect hits of the fire arrow.
+    of the fire arrow and area-of-effect hits of the fire arrow, like the note
+    implies.
   </p>
 </body>
 </html>
